@@ -49,14 +49,9 @@ jobs:
           kubectl-version: v1.22.0
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: eks-capstone
-      - run:
-          name: Copy config
-          command: |
-            sudo mkdir /.kube
-            sudo cp /home/circleci/.kube/config /.kube/config
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
-          resource-file-path: .circleci/files/deployment.yml
+          resource-file-path: ".circleci/files/deployment.yml"
           resource-name: namlai000/capstone
           show-kubectl-command: true
 workflows:

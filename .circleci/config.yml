@@ -46,9 +46,9 @@ jobs:
           cluster-name: eks-capstone
           install-kubectl: true
       - run:
-          name: Connect to cluster
+          name: Set context
           command: |
-            aws eks update-kubeconfig --name eks-capstone
+            kubectl config use-context eks-capstone
       - run:
           name: Test cluster
           command: |

@@ -50,9 +50,9 @@ jobs:
       - run:
           name: Check cluster
           command: |
-            export VALIDATE=$(aws eks describe-cluster --name eks-capstone --query 'cluster.name')
+            VALIDATE=$(aws eks describe-cluster --name eks-capstone --query 'cluster.name')
             echo "$VALIDATE" > ~/validate
-            ff cat ~/validate | grep "eks-capstone"
+            if cat ~/validate | grep "eks-capstone"
             then
               echo "Cluster eks-capstone already exist. Skipping job"
               circleci-agent step halt

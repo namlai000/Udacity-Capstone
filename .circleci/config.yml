@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Check cluster
           command: |
-            VALIDATE=$(aws eks describe-cluster --name eks-capstone --query 'cluster.name')
+            export VALIDATE=$(aws eks describe-cluster --name eks-capstone --query 'cluster.name')
             echo "$VALIDATE" > ~/validate
             ff cat ~/validate | grep "eks-capstone"
             then

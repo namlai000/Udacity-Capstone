@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Set context
           command: |
-            kubectl config use-context eks-capstone
+            kubectl config use-context arn:aws:eks:us-east-2:426102111906:cluster/eks-capstone
       - run:
           name: Test cluster
           command: |

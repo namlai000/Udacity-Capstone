@@ -65,6 +65,10 @@ jobs:
           name: Connect to cluster
           command: |
             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name eks-capstone
+      - run: 
+          name: Copy credentials
+          command: |
+            cp /etc/kubernetes/admin.conf ~/.kube/config
       - run:
           name: Test cluster
           command: |

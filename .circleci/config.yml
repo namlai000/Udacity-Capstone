@@ -36,28 +36,32 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: namlai000/capstone
+      - docker/push:
+          image: namlai000/capstone
   deploy-application:
     docker:
       - image: 'cimg/python:3.10'
     steps:
       - checkout
-      - kubernetes/install:
-          kubectl-version: v1.22.0
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: eks-capstone
-      # - run:
-      #     name: Set context
-      #     command: |
-      #       kubectl config use-context arn:aws:eks:us-east-2:426102111906:cluster/eks-capstone
-      - run:
-          name: Test cluster
-          command: |
-            kubectl config view
-            kubectl get services
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-name: namlai000/capstone
 workflows:
   deployment:
     jobs:
       - lint
-
-      - deploy-application:
+      - build-and-push:
           requires: [lint]
+      - deploy-application:
+          requires: [build-and-push]

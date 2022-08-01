@@ -5,7 +5,7 @@ orbs:
 jobs:
   create-deployment:
     docker:
-      - image: 'cimg/python:3.10'
+      - image: 'python:3.7.3-stretch'
     steps:
       - checkout
       - restore_cache:

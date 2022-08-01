@@ -46,23 +46,8 @@ jobs:
       - image: "cimg/python:3.10"
     steps:
       - checkout
-      - aws-cli/setup
-      - run:
-          name: Check if the cluster exist
-          command: |
-            VALIDATE=$(aws eks describe-cluster --name eks-capstone --query 'cluster.name')
-            cat $VALIDATE
-            if cat $VALIDATE | grep "eks-capstone"
-            then
-                echo "Cluster eks-capstone already exist"
-                circleci-agent step halt
-                exit 0
-            else
-                echo "Attempting to create the cluster $ENV_NAME-cluster"
-            fi
       - aws-eks/create-cluster:
           cluster-name: eks-capstone
-          aws-region: ${AWS_DEFAULT_REGION}
           nodegroup-name: eks-capstone-nodes
           node-type: t3.medium
           nodes-min: 2

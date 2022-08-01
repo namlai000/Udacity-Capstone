@@ -28,18 +28,18 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-  # build-and-push:
-  #   executor: docker/docker
-  #   steps:
-  #     - setup_remote_docker
-  #     - checkout
-  #     - docker/check
-  #     - docker/build:
-  #         image: namlai000/capstone
-  #         tag: '1.0'
-  #     - docker/push:
-  #         image: namlai000/capstone
-  #         tag: '1.0'
+  build-and-push:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: namlai000/capstone
+          tag: '1.0'
+      - docker/push:
+          image: namlai000/capstone
+          tag: '1.0'
   deploy-application:
     docker:
       - image: 'cimg/python:3.10'
@@ -49,7 +49,7 @@ jobs:
           cluster-name: eks-capstone
           install-kubectl: true
       - run:
-            name: test kubectl
+            name: Test kubectl
             command: |
               kubectl get services
               kubectl get nodes
@@ -58,6 +58,8 @@ jobs:
           resource-file-path: ".circleci/files/deployment.yml"
           resource-name: deployment/capstone
           show-kubectl-command: true
+      - kubernetes/create-or-update-resource:
+            resource-file-path: ".circleci/files/service.yml"
       - run:
             name: get deployment status
             command:  kubectl get svc capstone
@@ -65,7 +67,7 @@ workflows:
   deployment:
     jobs:
       - lint
-      # - build-and-push:
-      #     requires: [lint]
-      - deploy-application:
+      - build-and-push:
           requires: [lint]
+      - deploy-application:
+          requires: [build-and-push]

@@ -41,14 +41,14 @@ jobs:
       - image: 'cimg/python:3.10'
     steps:
       - checkout
-      #- install-awscli
+      - kubernetes/install:
+          kubectl-version: v1.22.0
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: eks-capstone
-          install-kubectl: true
-      - run:
-          name: Set context
-          command: |
-            kubectl config use-context arn:aws:eks:us-east-2:426102111906:cluster/eks-capstone
+      # - run:
+      #     name: Set context
+      #     command: |
+      #       kubectl config use-context arn:aws:eks:us-east-2:426102111906:cluster/eks-capstone
       - run:
           name: Test cluster
           command: |
@@ -58,5 +58,6 @@ workflows:
   deployment:
     jobs:
       - lint
+
       - deploy-application:
           requires: [lint]

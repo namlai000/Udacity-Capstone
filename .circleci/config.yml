@@ -111,6 +111,7 @@ jobs:
               sleep 10
             done
             echo "External IP: ${EXTERNAL_IP}"
+            curl -s --retry 10 "http://$EXTERNAL_IP" | grep "Sklearn Prediction Home"
 workflows:
   deployment:
     jobs:
@@ -121,3 +122,5 @@ workflows:
           requires: [run-lint]
       - deploy-application:
           requires: [deploy-eks]
+      - test-deployment:
+          requires: [deploy-application]

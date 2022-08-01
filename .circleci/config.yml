@@ -16,7 +16,7 @@ jobs:
           name: Install dependencies
           command: |
             python3 -m venv venv
-            source vent/bin/activate
+            . venv/bin/activate
             make install
       - save_cache:
           paths:
@@ -25,7 +25,7 @@ jobs:
       - run:
           name: Run lint
           command: |
-            source vent/bin/activate
+            . venv/bin/activate
             make lint
       # - aws-eks/update-kubeconfig-with-authenticator:
       #     cluster-name: eks-capstone

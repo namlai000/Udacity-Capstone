@@ -45,7 +45,7 @@ jobs:
           name: Test cluster
           command: |
             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name eks-capstone
-            kubectl get pod
+            kubectl get svc
 workflows:
   deployment:
     jobs:

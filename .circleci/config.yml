@@ -51,6 +51,7 @@ jobs:
           name: Check if the cluster exist
           command: |
             VALIDATE=$(aws eks describe-cluster --name eks-capstone --query 'cluster.name')
+            cat $VALIDATE
             if cat $VALIDATE | grep "eks-capstone"
             then
                 echo "Cluster eks-capstone already exist"

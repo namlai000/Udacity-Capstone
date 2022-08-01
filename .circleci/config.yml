@@ -50,8 +50,8 @@ jobs:
       - run:
           name: Copy config
           command: |
-            mkdir /home/.kube
-            cp /home/circleci/.kube/config /home/.kube/config
+            sudo mkdir /home/.kube
+            sudo cp /home/circleci/.kube/config /home/.kube/config
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: deployment.yml

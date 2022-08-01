@@ -102,12 +102,13 @@ jobs:
           command: |
             sleep 30
             EXTERNAL_IP=$(kubectl get service capstone | awk '{print $4}' | tail -n1)
-            echo "External IP: ${EXTERNAL_IP}"
-            if curl --insecure --silent --retry 10 "http://$EXTERNAL_IP" | grep "Sklearn Prediction Home"
+            echo "${EXTERNAL_IP}"
+            if curl --insecure --silent --retry 10 http://${EXTERNAL_IP} | grep "Sklearn Prediction Home"
             then
               exit 0
             else
               exit 1
+            fi
 workflows:
   deployment:
     jobs:

@@ -45,9 +45,10 @@ jobs:
       - image: 'cimg/python:3.10'
     steps:
       - checkout
+      - kubernetes/install:
+          kubectl-version: v1.22.0
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: eks-capstone
-          install-kubectl: true
       - run:
           name: Copy config
           command: |

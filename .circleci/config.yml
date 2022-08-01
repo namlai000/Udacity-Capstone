@@ -56,7 +56,7 @@ jobs:
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: ".circleci/files/deployment.yml"
-          resource-name: namlai000/capstone
+          resource-name: deployment/capstone
           show-kubectl-command: true
       - run:
             name: get deployment status

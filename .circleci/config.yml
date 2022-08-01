@@ -53,6 +53,7 @@ jobs:
           command: |
             sudo mkdir /.kube
             sudo cp /home/circleci/.kube/config /.kube/config
+            kubectl logs
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: deployment.yml

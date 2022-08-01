@@ -13,7 +13,7 @@ spec:
         app: capstone
     spec:
       containers:
-      - name: flask-app
+      - name: capstone
         image: namlai000/capstone:1.0
         ports:
         - containerPort: 80

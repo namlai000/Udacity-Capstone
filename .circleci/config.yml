@@ -50,15 +50,15 @@ jobs:
       - run:
           name: check if the cluster exist
           command: |
-            export VALIDATE=$(aws eks describe-cluster --name ${ENV_NAME}-cluster --query 'cluster.name')
+            export VALIDATE=$(aws eks describe-cluster --name eks-capstone --query 'cluster.name')
             echo "$VALIDATE" > ~/validate
-            if cat ~/validate | grep "${ENV_NAME}-cluster"
+            if cat ~/validate | grep "eks-capstone"
             then
-              echo "Cluster ${ENV_NAME}-cluster already exist. Skipping job"
+              echo "Cluster eks-capstone already exist. Skipping job"
               circleci-agent step halt
               exit 0
             else
-              echo "Attempting to create the cluster $ENV_NAME-cluster"
+              echo "Attempting to create the cluster eks-capstone"
             fi
       - aws-eks/create-cluster:
           cluster-name: eks-capstone

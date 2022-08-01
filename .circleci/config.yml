@@ -95,9 +95,8 @@ jobs:
       - image: "cimg/python:3.10"
     steps:
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: ${ENV_NAME}-cluster
+          cluster-name: eks-capstone
           install-kubectl: true
-          aws-region: ${AWS_DEFAULT_REGION}
       - run:
           name: Wait for service to be ready
           command: |

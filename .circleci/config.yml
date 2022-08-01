@@ -72,9 +72,31 @@ jobs:
           show-kubectl-command: true
       - kubernetes/create-or-update-resource:
           resource-file-path: ".circleci/files/service.yml"
+          show-kubectl-command: true
       - run:
           name: get deployment status
           command: kubectl get svc capstone
+  test-deployment:
+    docker:
+      - image: "cimg/python:3.10"
+    steps:
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: ${ENV_NAME}-cluster
+          install-kubectl: true
+          aws-region: ${AWS_DEFAULT_REGION}
+      - run:
+          name: Wait for service to be ready
+          command: |
+            for attempt in {1..30}; do
+              EXTERNAL_IP=$(kubectl get service capstone | awk '{print $4}' | tail -n1)
+              echo "Checking external IP: ${EXTERNAL_IP}"
+              if [ -n "${EXTERNAL_IP}" ] && [ -z $(echo "${EXTERNAL_IP}" | grep "pending") ]; then
+                break
+              fi
+              echo "Waiting for external IP to be ready: ${EXTERNAL_IP}"
+              sleep 10
+            done
+            echo "External IP: ${EXTERNAL_IP}"
 workflows:
   deployment:
     jobs:

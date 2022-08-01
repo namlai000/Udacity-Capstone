@@ -54,11 +54,9 @@ jobs:
           command: |
             sudo mkdir /.kube
             sudo cp /home/circleci/.kube/config /.kube/config
-            kubectl config current-context
-            kubectl config view
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
-          resource-file-path: deployment.yml
+          resource-file-path: .circleci/files/deployment.yml
           resource-name: namlai000/capstone
           show-kubectl-command: true
 workflows:

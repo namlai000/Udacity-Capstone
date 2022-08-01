@@ -103,7 +103,7 @@ jobs:
             sleep 30
             EXTERNAL_IP=$(kubectl get service capstone | awk '{print $4}' | tail -n1)
             echo "External IP: ${EXTERNAL_IP}"
-            if curl -s --retry 10 "http://$EXTERNAL_IP" | grep -q "<h3>Sklearn Prediction Home</h3>"
+            if curl --insecure --silent --retry 10 "http://$EXTERNAL_IP" | grep "Sklearn Prediction Home"
             then
               exit 0
             else

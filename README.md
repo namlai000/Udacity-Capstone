@@ -10,3 +10,5 @@ Using [Udacity-Project4](https://github.com/namlai000/Udacity-Project4) as the b
 
 ## Load Balancers
 http://a10985f282af14fd9bb8d4c1d4f69f3a-1374620741.us-east-2.elb.amazonaws.com/
+
+GET_PASSES_THIS_REPO_UDACITY_PLEASE
